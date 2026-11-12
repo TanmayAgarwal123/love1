@@ -1,0 +1,12 @@
+# Real personal config and data never go to git.
+config.yaml
+data/*
+!data/.gitkeep
+logs/*
+!logs/.gitkeep
+dashboard/reports/*
+!dashboard/reports/.gitkeep
+imports/
+__pycache__/
+*.pyc
+.venv/

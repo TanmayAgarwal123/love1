@@ -1,0 +1,100 @@
+# Relationship Ops — EXAMPLE config (sample values only; safe to commit).
+# Copy to config.yaml (gitignored) and put real values there.
+timezone: America/New_York
+
+# Master safety switch. While true, EVERY workflow runs in dry-run no matter
+# what its own `live` flag says. To go live: set this false AND flip one
+# workflow's `live: true` at a time.
+dry_run: true
+
+partner:
+  label: Partner            # used only as a label in your data
+  birthday: 2000-12-06
+  likes: [flowers, surprises, cats]
+  sizes: {}
+  milestones: []            # e.g. - {date: "05-31", label: "first met"}
+
+me:
+  label: Me
+
+messaging:
+  channel: whatsapp         # WhatsApp "Export chat" .txt files (manual import)
+  whatsapp:
+    export_dir: imports/whatsapp
+    drafts_dir: imports/drafts
+    my_name: Me             # your name exactly as it appears in the export
+    partner_name: Partner   # her contact name exactly as it appears in the export
+    date_order: dmy         # dmy (most locales) or mdy (US-locale phones)
+
+calendars:                  # .ics file paths or Google "secret address in iCal format" URLs
+  mine:
+    - {name: my-google, ics: imports/calendars/mine.ics}
+  hers:
+    - {name: her-shared, ics: imports/calendars/hers.ics, work: false}
+
+paths:
+  data: data
+  logs: logs
+  reports: dashboard/reports
+
+notifications:
+  desktop: false            # also pop a local desktop notification for nudges to YOU
+
+workflows:
+  reply_monitor:
+    enabled: true
+    live: false
+    threshold_minutes: 20
+    max_age_hours: 24
+    one_word_flags: [k, kk, ok, okk, fine, sure, whatever, cool, hmm, mhm]
+  gift_list:
+    enabled: true
+    live: false
+    lead_days: 14
+    top_n: 3
+    amazon_domain: amazon.com
+    ignore: [nap, sleep, food, coffee, hug, break, help, shower, rest]
+  date_night:
+    enabled: true
+    live: false
+    evening_start: "18:30"
+    evening_end: "22:00"
+    reservation_time: "19:30"
+    party_size: 2
+    preferred_days: [Fri, Sat, Thu, Sun, Wed, Tue, Mon]
+    booking_site: opentable
+    seed_restaurants:
+      - {name: Sample Bistro, cuisine: French, note: "sample - replace with a real place"}
+      - {name: Sample Noodle Bar, cuisine: Japanese, note: "sample - replace with a real place"}
+  friends_crm:
+    enabled: true
+    live: false
+    lookahead_hours: 48
+    known_friends: []
+    not_friends: []
+  long_shift:
+    enabled: true
+    live: false
+    min_hours: 12
+    lookahead_hours: 36
+    deliver_at: "18:00"
+    shift_keywords: [shift, work, hospital, clinic, on call, on-call, duty, rotation]
+    require_keyword: false
+    order: "Paneer butter masala, 2 garlic naan, mango lassi"
+    service: doordash
+    address_label: Her place
+  random_flowers:
+    enabled: true
+    live: false
+    window_weeks_min: 6
+    window_weeks_max: 8
+    lead_days: 2
+    avoid_near_birthday_days: 4
+    budget_cap: 75
+    currency: USD
+    florist: 1-800-flowers
+    avoid: [lilies]
+    seed: sample-seed
+  referee:
+    enabled: true            # invoke-only; never scheduled; writes a local draft for you
+    threshold_minutes: 20
